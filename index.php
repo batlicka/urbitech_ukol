@@ -52,11 +52,13 @@ if(isset($_POST["submit"])) {
 }
 
 //ukládání zadaných hodnot do csv
+$fp = file('ToDoList_data.csv');//uložím řádky do pole, aby je mohl jednoduše spočítat
   if($error =='' && $note != '' && $date != ''){
     $file_open = fopen("ToDoList_data.csv", "a");
-    //create array - Each array element contains a line from the file
-        $form_data = array(
-          'sr_no' => $no_rows+1,
+    //create array - Each array element contains a line from the file   
+
+    $form_data = array(
+          'sr_no' =>  count($fp)+1,
           'date'  => $date,
           'note'  => $note,          
         );        
@@ -66,6 +68,7 @@ if(isset($_POST["submit"])) {
         header('Location: index.php');
         exit;
   }
+ 
 //reading from csv
 function get_data()
 {
