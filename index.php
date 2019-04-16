@@ -21,8 +21,9 @@ if(isset($_GET["id"])) {
 if (isset($_GET["ok"])){  
   //předám si číslo řádku na kterém se vyskytovalo poklikané tlačítko OK
   $SendedButtonID = $_GET["ButtonID"];  
-  //vybereme řádek na který bylo kliknuto a uložíme ho do pole
+  //uložíme do pole, všechny data ze souboru
   $data = get_data();
+  //vybereme řádek na který bylo kliknuto a uložíme ho do pole
   $row = $data[$SendedButtonID-1];
   array_push($row,"OK");
   $data[$SendedButtonID-1]=$row;
@@ -65,7 +66,7 @@ $fp = file('ToDoList_data.csv');//uložím řádky do pole, aby je mohl jednodu�
         fputcsv($file_open, $form_data);
         $date = '';
         $note = '';
-        header('Location: index.php');
+        header('Location: index.php');//redirect - řekne prohlížeči po odeslání formuláře, aby se reloadoval a zapomenul aktuální stav
         exit;
   }
  
@@ -76,7 +77,7 @@ function get_data()
   $row = 0;
     if (($handle = fopen("ToDoList_data.csv", "r")) !== FALSE) {
       while (($row = fgetcsv($handle, 1000, ",")) !== FALSE) { //po dosažení 
-        //print_r($row);
+        print_r($row);
         $data[] = $row;
       }
       fclose($handle); 
@@ -138,7 +139,7 @@ function set_tableRow()
 </head>
 <body>
       <!--??? otázka na Marka, jak zakomponovat externí php soubor<form action="obsluha.php" method="post">-->
-      <form method="post">
+      <form  method="post"> <!--<form action="obsluha.php" method="post">-->
       <h3 align="center">To do list</h3>
       <br/>
       <?php echo $error; ?>
